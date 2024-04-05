@@ -4,6 +4,7 @@ const config = {
 	tabWidth: 4,
 	useTabs: true,
 	semi: false,
+	printWidth: 120,
 }
 
 export default config
