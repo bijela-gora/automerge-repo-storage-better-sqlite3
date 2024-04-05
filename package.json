@@ -1,0 +1,42 @@
+{
+  "name": "automerge-repo-storage-better-sqlite3",
+  "version": "0.1.0",
+  "description": "SQLite-based storage adapter for Automerge Repo (uses better-sqlite3 package)",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/bijela-gora/automerge-repo-storage-better-sqlite3.git"
+  },
+  "author": {
+    "name": "Bijela Gora",
+    "url": "https://github.com/bijela-gora"
+  },
+  "license": "MIT",
+  "type": "module",
+  "files": [
+    "dist"
+  ],
+  "main": "dist/BetterSqlite3StorageAdapter.js",
+  "scripts": {
+    "build": "tsc",
+    "test": "vitest"
+  },
+  "keywords": [
+    "automerge",
+    "storage adapter",
+    "sqlite",
+    "better-sqlite3"
+  ],
+  "devDependencies": {
+    "@automerge/automerge-repo": "^1.1.5",
+    "@tsconfig/node20": "^20.1.4",
+    "@tsconfig/strictest": "^2.0.5",
+    "@types/better-sqlite3": "^7.6.9",
+    "@types/node": "^20.11.30",
+    "better-sqlite3": "^9.4.3",
+    "typescript": "^5.4.3",
+    "vitest": "^1.4.0"
+  },
+  "peerDependencies": {
+    "better-sqlite3": "^9.4.3"
+  }
+}
