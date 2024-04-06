@@ -1,6 +1,6 @@
 {
 	"extends": ["@tsconfig/strictest/tsconfig", "@tsconfig/node20/tsconfig"],
-	"include": ["src/BetterSqlite3StorageAdapter.ts"],
+	"include": ["src/better-sqlite3-storage-adapter.ts"],
 	"compilerOptions": {
 		"declaration": true,
 		"outDir": "dist"

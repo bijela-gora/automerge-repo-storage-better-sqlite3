@@ -15,8 +15,8 @@ export class BetterSqlite3StorageAdapter implements StorageAdapterInterface {
 	#loadRange_stmt: Statement<[string]>
 	#removeRange_stmt: Statement<[string]>
 
-	constructor(db: DatabaseInstance, tableName: string = 'automerge_repo_data') {
-		this.#db = db
+	constructor(database: DatabaseInstance, tableName: string = 'automerge_repo_data') {
+		this.#db = database
 		this.#db.exec(`CREATE TABLE IF NOT EXISTS ${tableName} (
         key TEXT PRIMARY KEY,
         data BLOB NOT NULL
@@ -32,23 +32,23 @@ export class BetterSqlite3StorageAdapter implements StorageAdapterInterface {
 
 	async load(keyArray: StorageKey): Promise<Uint8Array | undefined> {
 		const key = this.#keyToString(keyArray)
-		const res = this.#load_stmt.get(key) as { key: string; data: Uint8Array } | undefined
-		if (!res) {
+		const result = this.#load_stmt.get(key) as { key: string; data: Uint8Array } | undefined
+		if (!result) {
 			return undefined
 		}
-		return bufferToUint8Array(res.data as Buffer)
+		return bufferToUint8Array(result.data as Buffer)
 	}
 
 	async save(keyArray: StorageKey, binary: Uint8Array): Promise<void> {
 		const key = this.#keyToString(keyArray)
 		try {
 			this.#save_stmt.run(key, binary)
-		} catch (e: unknown) {
-			if (e instanceof SqliteError) {
+		} catch (error: unknown) {
+			if (error instanceof SqliteError) {
 				await this.remove(keyArray)
 				this.#save_stmt.run(key, binary)
 			} else {
-				throw e
+				throw error
 			}
 		}
 	}
@@ -60,11 +60,11 @@ export class BetterSqlite3StorageAdapter implements StorageAdapterInterface {
 
 	async loadRange(keyPrefix: StorageKey): Promise<Chunk[]> {
 		const prefix = this.#keyToString(keyPrefix)
-		const res = this.#loadRange_stmt.all(`${prefix}*`) as Array<{
+		const result = this.#loadRange_stmt.all(`${prefix}*`) as Array<{
 			key: string
 			data: Buffer
 		}>
-		return res.map((x) => {
+		return result.map((x) => {
 			return {
 				key: this.#stringToKey(x.key),
 				data: bufferToUint8Array(x.data),

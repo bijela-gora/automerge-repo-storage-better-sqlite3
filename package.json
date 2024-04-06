@@ -36,6 +36,7 @@
 		"better-sqlite3": "^9.4.3",
 		"eslint": "^9.0.0",
 		"eslint-config-prettier": "^9.1.0",
+		"eslint-plugin-unicorn": "^52.0.0",
 		"prettier": "^3.2.5",
 		"typescript": "^5.4.4",
 		"typescript-eslint": "^7.5.0",
