@@ -17,9 +17,10 @@
 	],
 	"main": "dist/BetterSqlite3StorageAdapter.js",
 	"scripts": {
+		"ci": "pnpm run lint && pnpm run test && pnpm run build",
 		"lint": "pnpm exec prettier --check . && pnpm exec eslint ./src",
 		"build": "tsc",
-		"test": "vitest"
+		"test": "vitest --run"
 	},
 	"keywords": [
 		"automerge",
@@ -29,7 +30,7 @@
 	],
 	"devDependencies": {
 		"@automerge/automerge-repo": "^1.1.5",
-		"@tsconfig/node20": "^20.1.4",
+		"@tsconfig/node22": "^22.0.0",
 		"@tsconfig/strictest": "^2.0.5",
 		"@types/better-sqlite3": "^7.6.9",
 		"@types/node": "^20.11.30",
