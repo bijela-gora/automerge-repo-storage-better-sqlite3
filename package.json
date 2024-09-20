@@ -20,7 +20,8 @@
 		"ci": "pnpm run lint && pnpm run test && pnpm run build",
 		"lint": "pnpm exec prettier --check . && pnpm exec eslint ./src",
 		"build": "tsc",
-		"test": "vitest --run"
+		"test": "vitest --run",
+		"watch-test": "vitest"
 	},
 	"keywords": [
 		"automerge",
@@ -29,7 +30,7 @@
 		"better-sqlite3"
 	],
 	"devDependencies": {
-		"@automerge/automerge-repo": "^1.1.5",
+		"@automerge/automerge-repo": "^1.2.1",
 		"@tsconfig/node22": "^22.0.0",
 		"@tsconfig/strictest": "^2.0.5",
 		"@types/better-sqlite3": "^7.6.9",

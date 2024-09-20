@@ -6,33 +6,35 @@ function bufferToUint8Array(buf: Buffer): Uint8Array {
 	return new Uint8Array(buf.buffer, buf.byteOffset, buf.length / Uint8Array.BYTES_PER_ELEMENT)
 }
 
-export class BetterSqlite3StorageAdapter implements StorageAdapterInterface {
-	#db: DatabaseInstance
+const _SEP = '.'
 
-	#load_stmt: Statement<[string]>
-	#save_stmt: Statement<[string, Uint8Array]>
-	#remove_stmt: Statement<[string]>
-	#loadRange_stmt: Statement<[string]>
-	#removeRange_stmt: Statement<[string]>
+export class BetterSqlite3StorageAdapter implements StorageAdapterInterface {
+	_db: DatabaseInstance
+
+	_load_stmt: Statement<[string]>
+	_save_stmt: Statement<[string, Uint8Array]>
+	_remove_stmt: Statement<[string]>
+	_loadRange_stmt: Statement<[string]>
+	_removeRange_stmt: Statement<[string]>
 
 	constructor(database: DatabaseInstance, tableName: string = 'automerge_repo_data') {
-		this.#db = database
-		this.#db.exec(`CREATE TABLE IF NOT EXISTS ${tableName} (
+		this._db = database
+		this._db.exec(`CREATE TABLE IF NOT EXISTS ${tableName} (
         key TEXT PRIMARY KEY,
         data BLOB NOT NULL
     ) WITHOUT ROWID, STRICT;`)
-		this.#db.exec(`CREATE INDEX idx ON ${tableName}(key);`)
+		this._db.exec(`CREATE INDEX idx ON ${tableName}(key);`)
 
-		this.#load_stmt = this.#db.prepare(`SELECT data FROM ${tableName} WHERE key = ?;`)
-		this.#save_stmt = this.#db.prepare(`INSERT INTO ${tableName} VALUES (?, ?);`)
-		this.#remove_stmt = this.#db.prepare(`DELETE FROM ${tableName} WHERE key = ?;`)
-		this.#loadRange_stmt = this.#db.prepare(`SELECT * FROM ${tableName} WHERE key GLOB ?;`)
-		this.#removeRange_stmt = this.#db.prepare(`DELETE FROM ${tableName} WHERE key GLOB ?;`)
+		this._load_stmt = this._db.prepare(`SELECT data FROM ${tableName} WHERE key = ?;`)
+		this._save_stmt = this._db.prepare(`INSERT INTO ${tableName} VALUES (?, ?);`)
+		this._remove_stmt = this._db.prepare(`DELETE FROM ${tableName} WHERE key = ?;`)
+		this._loadRange_stmt = this._db.prepare(`SELECT * FROM ${tableName} WHERE key GLOB ?;`)
+		this._removeRange_stmt = this._db.prepare(`DELETE FROM ${tableName} WHERE key GLOB ?;`)
 	}
 
 	async load(keyArray: StorageKey): Promise<Uint8Array | undefined> {
-		const key = this.#keyToString(keyArray)
-		const result = this.#load_stmt.get(key) as { key: string; data: Uint8Array } | undefined
+		const key = this._keyToString(keyArray)
+		const result = this._load_stmt.get(key) as { key: string; data: Uint8Array } | undefined
 		if (!result) {
 			return undefined
 		}
@@ -40,13 +42,13 @@ export class BetterSqlite3StorageAdapter implements StorageAdapterInterface {
 	}
 
 	async save(keyArray: StorageKey, binary: Uint8Array): Promise<void> {
-		const key = this.#keyToString(keyArray)
+		const key = this._keyToString(keyArray)
 		try {
-			this.#save_stmt.run(key, binary)
+			this._save_stmt.run(key, binary)
 		} catch (error: unknown) {
 			if (error instanceof SqliteError) {
 				await this.remove(keyArray)
-				this.#save_stmt.run(key, binary)
+				this._save_stmt.run(key, binary)
 			} else {
 				throw error
 			}
@@ -54,36 +56,42 @@ export class BetterSqlite3StorageAdapter implements StorageAdapterInterface {
 	}
 
 	async remove(keyArray: string[]): Promise<void> {
-		const key = this.#keyToString(keyArray)
-		this.#remove_stmt.run(key)
+		const key = this._keyToString(keyArray)
+		this._remove_stmt.run(key)
 	}
 
 	async loadRange(keyPrefix: StorageKey): Promise<Chunk[]> {
-		const prefix = this.#keyToString(keyPrefix)
-		const result = this.#loadRange_stmt.all(`${prefix}*`) as Array<{
+		const prefix = this._keyToString(keyPrefix)
+		const result = this._loadRange_stmt.all(`${prefix}*`) as Array<{
 			key: string
 			data: Buffer
 		}>
-		return result.map((x) => {
-			return {
-				key: this.#stringToKey(x.key),
-				data: bufferToUint8Array(x.data),
+
+		const length = result.length
+		const converted: Chunk[] = Array.from({ length })
+		for (let index = 0; index < length; index++) {
+			const x = result[index]
+			converted[index] = {
+				// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+				key: this._stringToKey(x!.key),
+				// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+				data: bufferToUint8Array(x!.data),
 			}
-		})
+		}
+
+		return converted
 	}
 
 	async removeRange(keyPrefix: string[]): Promise<void> {
-		const prefix = this.#keyToString(keyPrefix)
-		this.#removeRange_stmt.run(`${prefix}*`)
+		const prefix = this._keyToString(keyPrefix)
+		this._removeRange_stmt.run(`${prefix}*`)
 	}
 
-	#keyToString(key: StorageKey): string {
-		return key.join(this.#SEP)
+	_keyToString(key: StorageKey): string {
+		return key.join(_SEP)
 	}
 
-	#stringToKey(key: string): StorageKey {
-		return key.split(this.#SEP)
+	_stringToKey(key: string): StorageKey {
+		return key.split(_SEP)
 	}
-
-	#SEP = '.'
 }

@@ -1,5 +1,5 @@
 import { describe, onTestFinished } from 'vitest'
-import { runStorageAdapterTests, SetupFn } from '@automerge/automerge-repo/dist/helpers/tests/storage-adapter-tests.js'
+import { runStorageAdapterTests, SetupFn } from '@automerge/automerge-repo/helpers/tests/storage-adapter-tests.js'
 import DatabaseInstance from 'better-sqlite3'
 import { BetterSqlite3StorageAdapter } from './better-sqlite3-storage-adapter.js'
 

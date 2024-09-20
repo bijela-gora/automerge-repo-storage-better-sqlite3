@@ -9,8 +9,8 @@ importers:
   .:
     devDependencies:
       '@automerge/automerge-repo':
-        specifier: ^1.1.5
-        version: 1.1.5(@types/node@20.12.4)(typescript@5.4.4)
+        specifier: ^1.2.1
+        version: 1.2.1(@types/node@20.12.4)(typescript@5.4.4)
       '@tsconfig/node22':
         specifier: ^22.0.0
         version: 22.0.0
@@ -54,14 +54,11 @@ packages:
     resolution: {integrity: sha512-1Yjs2SvM8TflER/OD3cOjhWWOZb58A2t7wpE2S9XfBYTiIl+XFhQG2bjy4Pu1I+EAlCNUzRDYDdFwFYUKvXcIA==}
     engines: {node: '>=0.10.0'}
 
-  '@automerge/automerge-repo@1.1.5':
-    resolution: {integrity: sha512-SwXWwkasugfdGwQy4RuS/pn2FrI+YDtzrwvUbXkLVRiX83Zt3UQBXlL+QW+5QbH7uQ2mK0l3rOkRlQwnsYHUNg==}
+  '@automerge/automerge-repo@1.2.1':
+    resolution: {integrity: sha512-uEBr4bM01aSWkEt2tDKQxfW0Pahz2zbTTn4sRJfeKJlAg2SLr4QepFJ+3Tp4CNEkkU485olfnKYf6gt7uilMZQ==}
 
-  '@automerge/automerge-wasm@0.12.0':
-    resolution: {integrity: sha512-MJVmw/83Uy7WuqA9Dac3VcLXpXENZSDu7hqxttdFyAYZXQYQugiU7R+RUO2sP7081J9gRUb2+73sYpNnSTwzYQ==}
-
-  '@automerge/automerge@2.1.13':
-    resolution: {integrity: sha512-9t185MgkFvwvqccmA45yKq61If2KCpKxZg19gukwO9G15bvxuh5ulWv2PWvMZ+iTvhDYCH+pZwXmFkD4nufScw==}
+  '@automerge/automerge@2.2.8':
+    resolution: {integrity: sha512-kP6Z9lIkNeIGe/jhF8SUQAgUMwVjtXCBL0eZEgQGCoWvPNTPcg8fnQco28XkYBrfkkuqiEUAbdHhJmSp0y79ug==}
 
   '@babel/code-frame@7.24.2':
     resolution: {integrity: sha512-y5+tLQyV8pg3fsiln67BVLD1P13Eg4lh5RW9mF0zUuvLrv9uIQ4MCL+CRT+FTsBlBjcIan6PGsLcBN0m3ClUyQ==}
@@ -1545,8 +1542,8 @@ packages:
   wrappy@1.0.2:
     resolution: {integrity: sha512-l4Sp/DRseor9wL6EvV2+TuQn63dMkPjZ/sp9XkghTEbV9KlPS1xUsZ3u7/IQO4wxtcFB4bgpQPRcR3QCvezPcQ==}
 
-  xstate@4.38.3:
-    resolution: {integrity: sha512-SH7nAaaPQx57dx6qvfcIgqKRXIh4L0A1iYEqim4s1u7c9VoCgzZc+63FY90AKU4ZzOC2cfJzTnpO4zK7fCUzzw==}
+  xstate@5.18.1:
+    resolution: {integrity: sha512-m02IqcCQbaE/kBQLunwub/5i8epvkD2mFutnL17Oeg1eXTShe1sRF4D5mhv1dlaFO4vbW5gRGRhraeAD5c938g==}
 
   yallist@4.0.0:
     resolution: {integrity: sha512-3wdGidZyq5PB084XLES5TpOSRA3wjXAlIWMhum2kRcv/41Sn2emQ0dycQW4uZXLejwKvg6EsvbdlVL+FYEct7A==}
@@ -1567,9 +1564,9 @@ snapshots:
 
   '@aashutoshrathi/word-wrap@1.2.6': {}
 
-  '@automerge/automerge-repo@1.1.5(@types/node@20.12.4)(typescript@5.4.4)':
+  '@automerge/automerge-repo@1.2.1(@types/node@20.12.4)(typescript@5.4.4)':
     dependencies:
-      '@automerge/automerge': 2.1.13
+      '@automerge/automerge': 2.2.8
       bs58check: 3.0.1
       cbor-x: 1.5.9
       debug: 4.3.4
@@ -1578,7 +1575,7 @@ snapshots:
       tiny-typed-emitter: 2.1.0
       ts-node: 10.9.2(@types/node@20.12.4)(typescript@5.4.4)
       uuid: 9.0.1
-      xstate: 4.38.3
+      xstate: 5.18.1
     transitivePeerDependencies:
       - '@swc/core'
       - '@swc/wasm'
@@ -1586,11 +1583,8 @@ snapshots:
       - supports-color
       - typescript
 
-  '@automerge/automerge-wasm@0.12.0': {}
-
-  '@automerge/automerge@2.1.13':
+  '@automerge/automerge@2.2.8':
     dependencies:
-      '@automerge/automerge-wasm': 0.12.0
       uuid: 9.0.1
 
   '@babel/code-frame@7.24.2':
@@ -3027,7 +3021,7 @@ snapshots:
 
   wrappy@1.0.2: {}
 
-  xstate@4.38.3: {}
+  xstate@5.18.1: {}
 
   yallist@4.0.0: {}
 
