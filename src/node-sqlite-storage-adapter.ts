@@ -1,10 +1,7 @@
 import { DatabaseSync, StatementSync } from 'node:sqlite'
 
 import type { Chunk, StorageAdapterInterface, StorageKey } from '@automerge/automerge-repo'
-
-const _SEP = '.'
-const KEY_PROP_NAME = 'key'
-const DATA_PROP_NAME = 'data'
+import { _SEP, DATA_PROP_NAME, KEY_PROP_NAME } from './constants.ts'
 
 export class NodeSqliteStorageAdapter implements StorageAdapterInterface {
 	private readonly _db: DatabaseSync
@@ -60,8 +57,8 @@ export class NodeSqliteStorageAdapter implements StorageAdapterInterface {
 		for (let index = 0; index < length; index++) {
 			const x = result[index]
 			converted[index] = {
-				[KEY_PROP_NAME]: this._stringToKey(x![KEY_PROP_NAME]),
-				[DATA_PROP_NAME]: x![DATA_PROP_NAME],
+				key: this._stringToKey(x![KEY_PROP_NAME]),
+				data: x![DATA_PROP_NAME],
 			}
 		}
 
