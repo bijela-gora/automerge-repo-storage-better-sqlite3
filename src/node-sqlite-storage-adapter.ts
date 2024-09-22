@@ -7,13 +7,12 @@ const KEY_PROP_NAME = 'key'
 const DATA_PROP_NAME = 'data'
 
 export class NodeSqliteStorageAdapter implements StorageAdapterInterface {
-	_db: DatabaseSync
-
-	_load_stmt: StatementSync
-	_save_stmt: StatementSync
-	_remove_stmt: StatementSync
-	_loadRange_stmt: StatementSync
-	_removeRange_stmt: StatementSync
+	private readonly _db: DatabaseSync
+	private readonly _load_stmt: StatementSync
+	private readonly _save_stmt: StatementSync
+	private readonly _remove_stmt: StatementSync
+	private readonly _loadRange_stmt: StatementSync
+	private readonly _removeRange_stmt: StatementSync
 
 	constructor(database: DatabaseSync, tableName: string = '`automerge_repo_data`') {
 		this._db = database
