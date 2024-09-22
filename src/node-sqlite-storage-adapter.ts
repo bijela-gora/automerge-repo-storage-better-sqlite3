@@ -17,10 +17,9 @@ export class NodeSqliteStorageAdapter implements StorageAdapterInterface {
 	constructor(database: DatabaseSync, tableName: string = '`automerge_repo_data`') {
 		this._db = database
 
-		this._db.exec(`CREATE TABLE IF NOT EXISTS ${tableName} (
-        ${KEY_PROP_NAME} TEXT PRIMARY KEY,
-        ${DATA_PROP_NAME} BLOB NOT NULL
-    ) STRICT;`)
+		this._db.exec(
+			`CREATE TABLE IF NOT EXISTS ${tableName} (${KEY_PROP_NAME} TEXT PRIMARY KEY, ${DATA_PROP_NAME} BLOB NOT NULL) STRICT;`,
+		)
 		this._load_stmt = this._db.prepare(`SELECT ${DATA_PROP_NAME} FROM ${tableName} WHERE ${KEY_PROP_NAME} = ?;`)
 		this._save_stmt = this._db.prepare(`INSERT OR REPLACE INTO ${tableName} VALUES (?, ?);`)
 		this._remove_stmt = this._db.prepare(`DELETE FROM ${tableName} WHERE ${KEY_PROP_NAME} = ?;`)
