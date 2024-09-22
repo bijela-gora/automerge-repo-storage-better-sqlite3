@@ -22,8 +22,6 @@ export class NodeSqliteStorageAdapter implements StorageAdapterInterface {
         ${KEY_PROP_NAME} TEXT PRIMARY KEY,
         ${DATA_PROP_NAME} BLOB NOT NULL
     ) STRICT;`)
-		this._db.exec(`CREATE INDEX idx ON ${tableName}(${KEY_PROP_NAME});`)
-
 		this._load_stmt = this._db.prepare(`SELECT ${DATA_PROP_NAME} FROM ${tableName} WHERE ${KEY_PROP_NAME} = ?;`)
 		this._save_stmt = this._db.prepare(`INSERT OR REPLACE INTO ${tableName} VALUES (?, ?);`)
 		this._remove_stmt = this._db.prepare(`DELETE FROM ${tableName} WHERE ${KEY_PROP_NAME} = ?;`)
