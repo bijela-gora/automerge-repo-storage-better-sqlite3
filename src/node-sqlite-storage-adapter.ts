@@ -3,6 +3,8 @@ import { DatabaseSync, StatementSync } from 'node:sqlite'
 import type { Chunk, StorageAdapterInterface, StorageKey } from '@automerge/automerge-repo'
 
 const _SEP = '.'
+const KEY_PROP_NAME = 'key'
+const DATA_PROP_NAME = 'data'
 
 export class NodeSqliteStorageAdapter implements StorageAdapterInterface {
 	_db: DatabaseSync
@@ -15,8 +17,6 @@ export class NodeSqliteStorageAdapter implements StorageAdapterInterface {
 
 	constructor(database: DatabaseSync, tableName: string = '`automerge_repo_data`') {
 		this._db = database
-		const KEY_PROP_NAME = '`key`'
-		const DATA_PROP_NAME = '`data`'
 
 		this._db.exec(`CREATE TABLE IF NOT EXISTS ${tableName} (
         ${KEY_PROP_NAME} TEXT PRIMARY KEY,
@@ -33,11 +33,11 @@ export class NodeSqliteStorageAdapter implements StorageAdapterInterface {
 
 	async load(keyArray: StorageKey): Promise<Uint8Array | undefined> {
 		const key = this._keyToString(keyArray)
-		const result = this._load_stmt.get(key) as { key: string; data: Uint8Array } | undefined
+		const result = this._load_stmt.get(key) as { [KEY_PROP_NAME]: string; [DATA_PROP_NAME]: Uint8Array } | undefined
 		if (!result) {
 			return undefined
 		}
-		return result.data
+		return result[DATA_PROP_NAME]
 	}
 
 	async save(keyArray: StorageKey, binary: Uint8Array): Promise<void> {
@@ -53,8 +53,8 @@ export class NodeSqliteStorageAdapter implements StorageAdapterInterface {
 	async loadRange(keyPrefix: StorageKey): Promise<Chunk[]> {
 		const prefix = this._keyToString(keyPrefix)
 		const result = this._loadRange_stmt.all(`${prefix}*`) as Array<{
-			key: string
-			data: Uint8Array
+			[KEY_PROP_NAME]: string
+			[DATA_PROP_NAME]: Uint8Array
 		}>
 
 		const length = result.length
@@ -62,8 +62,8 @@ export class NodeSqliteStorageAdapter implements StorageAdapterInterface {
 		for (let index = 0; index < length; index++) {
 			const x = result[index]
 			converted[index] = {
-				key: this._stringToKey(x!.key),
-				data: x!.data,
+				[KEY_PROP_NAME]: this._stringToKey(x![KEY_PROP_NAME]),
+				[DATA_PROP_NAME]: x![DATA_PROP_NAME],
 			}
 		}
 
