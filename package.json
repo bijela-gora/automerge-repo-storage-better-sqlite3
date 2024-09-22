@@ -35,11 +35,11 @@
 		"@automerge/automerge-repo": "^1.2.1",
 		"@tsconfig/node22": "^22.0.0",
 		"@tsconfig/strictest": "^2.0.5",
-		"@types/better-sqlite3": "^7.6.9",
+		"@types/better-sqlite3": "^7.6.11",
 		"@types/node": "^22.5.5",
 		"lodash.ismatch": "^4.4.0",
-		"prettier": "^3.2.5",
-		"typescript": "^5.4.4",
+		"prettier": "^3.3.3",
+		"typescript": "^5.6.2",
 		"vitest": "^2.1.1"
 	},
 	"peerDependencies": {
