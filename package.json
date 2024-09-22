@@ -20,8 +20,10 @@
 		"ci": "pnpm run lint && pnpm run test && pnpm run build",
 		"lint": "pnpm exec prettier --check . && pnpm exec eslint ./src",
 		"build": "tsc",
-		"test": "vitest --run",
-		"watch-test": "vitest"
+		"test": "vitest --run && pnpm run test-experimental",
+		"watch-test": "vitest",
+		"test-experimental": "node --experimental-strip-types --experimental-sqlite src/node-sqlite-storage-adapter-test.ts",
+		"watch-test-experimental": "node --watch --experimental-strip-types --experimental-sqlite src/node-sqlite-storage-adapter-test.ts"
 	},
 	"keywords": [
 		"automerge",
@@ -34,17 +36,17 @@
 		"@tsconfig/node22": "^22.0.0",
 		"@tsconfig/strictest": "^2.0.5",
 		"@types/better-sqlite3": "^7.6.9",
-		"@types/node": "^20.11.30",
-		"better-sqlite3": "^9.4.3",
-		"eslint": "^9.0.0",
-		"eslint-config-prettier": "^9.1.0",
-		"eslint-plugin-unicorn": "^52.0.0",
+		"@types/node": "^22.5.5",
+		"lodash.ismatch": "^4.4.0",
 		"prettier": "^3.2.5",
 		"typescript": "^5.4.4",
 		"typescript-eslint": "^7.5.0",
-		"vitest": "^1.4.0"
+		"vitest": "^2.1.1"
 	},
 	"peerDependencies": {
 		"better-sqlite3": "^9.4.3"
+	},
+	"dependencies": {
+		"better-sqlite3": "^11.3.0"
 	}
 }
