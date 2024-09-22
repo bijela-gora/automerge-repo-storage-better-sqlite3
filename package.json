@@ -19,7 +19,7 @@
 	"scripts": {
 		"ci": "pnpm run lint && pnpm run test && pnpm run build",
 		"lint": "pnpm exec prettier --check .",
-		"build": "tsc",
+		"build": "rm -rf dist && tsc",
 		"test": "vitest --run && pnpm run test-experimental",
 		"watch-test": "vitest",
 		"test-experimental": "node --experimental-strip-types --experimental-sqlite src/node-sqlite-storage-adapter-test.ts",
