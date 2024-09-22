@@ -17,7 +17,7 @@
 	],
 	"main": "dist/BetterSqlite3StorageAdapter.js",
 	"scripts": {
-		"ci": "pnpm run lint && pnpm run test && pnpm run build",
+		"ci": "pnpm run lint && pnpm run test && pnpm run test-experimental && pnpm run build",
 		"lint": "pnpm exec prettier --check . && pnpm exec eslint ./src",
 		"build": "tsc",
 		"test": "vitest --run && pnpm run test-experimental",
