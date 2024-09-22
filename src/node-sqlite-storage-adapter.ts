@@ -21,7 +21,7 @@ export class NodeSqliteStorageAdapter implements StorageAdapterInterface {
 		this._db.exec(`CREATE TABLE IF NOT EXISTS ${tableName} (
         ${KEY_PROP_NAME} TEXT PRIMARY KEY,
         ${DATA_PROP_NAME} BLOB NOT NULL
-    ), STRICT;`)
+    ) STRICT;`)
 		this._db.exec(`CREATE INDEX idx ON ${tableName}(${KEY_PROP_NAME});`)
 
 		this._load_stmt = this._db.prepare(`SELECT ${DATA_PROP_NAME} FROM ${tableName} WHERE ${KEY_PROP_NAME} = ?;`)
