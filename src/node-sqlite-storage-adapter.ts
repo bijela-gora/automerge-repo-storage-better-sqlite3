@@ -21,8 +21,8 @@ export class NodeSqliteStorageAdapter implements StorageAdapterInterface {
 		this._save_stmt = this._db.prepare(`INSERT OR REPLACE INTO ${tableName} VALUES (?, ?);`)
 		this._remove_stmt = this._db.prepare(`DELETE FROM ${tableName} WHERE ${KEY_PROP_NAME} = ?;`)
 		this._loadRange_stmt = this._db.prepare(
-			`SELECT * FROM ${tableName} WHERE ${KEY_PROP_NAME} GLOB ? ORDER BY rowid;`,
-		) // TODO: find out should we order or not
+			`SELECT * FROM ${tableName} WHERE ${KEY_PROP_NAME} GLOB ? ORDER BY rowid;`, // TODO: find out should we sort or not
+		)
 		this._removeRange_stmt = this._db.prepare(`DELETE FROM ${tableName} WHERE ${KEY_PROP_NAME} GLOB ?;`)
 	}
 
