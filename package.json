@@ -1,6 +1,6 @@
 {
 	"name": "automerge-repo-storage-better-sqlite3",
-	"version": "0.1.0",
+	"version": "0.2.0",
 	"description": "SQLite-based storage adapter for Automerge Repo (uses better-sqlite3 package)",
 	"repository": {
 		"type": "git",
